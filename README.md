@@ -39,6 +39,7 @@ Aplicación implementada como prueba de desarrollo para demostración de conocim
 - [`@react-native-async-storage/async-storage`]
 - [`@reduxjs/toolkit`]
 - [`moment`]
+- [`react-native-modal`]
 
 
 
