@@ -16,10 +16,8 @@ Aplicación implementada como prueba de desarrollo para demostración de conocim
 
 ## Autor
 
-| [<img src="https://avatars.githubusercontent.com/u/25647105?s=400&u=254be3dc6211d4006151866b7e313819542e3aa7&v=4" width=115><br><sub>Camila Fernanda Alves</sub>](https://github.com/kebinRamirez) |  
+| [<img src="https://avatars.githubusercontent.com/u/25647105?s=400&u=254be3dc6211d4006151866b7e313819542e3aa7&v=4" width=115><br><sub>Ingeniero Kebin Ramirez</sub>](https://github.com/kebinRamirez) |  
 | :---: |
-
-Ingeniero Kebin Ramirez
 
 ## 🛠️ Como ejecutar la aplicación
 
