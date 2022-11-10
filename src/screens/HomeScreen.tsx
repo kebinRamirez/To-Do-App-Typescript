@@ -1,15 +1,19 @@
-import React, { useEffect } from "react";
-import { SafeAreaView, Text, Dimensions, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, Text, Dimensions, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux';
-import { taksList, } from '../redux/features/CreateATask';
+import { taksList } from '../redux/features/CreateATask';
 import ListComponent from '../components/List';
+import ModalComponent from "../components/ModalComponent";
+import {initialTaskState} from '../constanst/InitialTaskState'
 
 function HomeScreen({ navigation }: any) {
     const tasks = useSelector(taksList);
+    const [modal, setModal] = useState(false)
+    const [selectedTask, setSelectedTask] = useState(initialTaskState)
 
     useEffect(() => {
 
-    }, [tasks])
+    }, [tasks, modal])
 
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: ' white' }}>
@@ -17,13 +21,18 @@ function HomeScreen({ navigation }: any) {
                 <Text style={styles.labelStyle}>
                     {'Completed Task'}
                 </Text>
-                <ListComponent tasks={tasks.taskCompleted} />
+                <ListComponent setModal={setModal} setSelectedTask={setSelectedTask} tasks={tasks.taskCompleted} />
                 <Text style={styles.labelStyle}>
                     {'Pending Task'}
                 </Text>
-                <ListComponent tasks={tasks.task} />
-
+                <ListComponent setModal={setModal} setSelectedTask={setSelectedTask} tasks={tasks.task} />
             </ScrollView>
+            <ModalComponent
+                modal={modal}
+                selectedTask={selectedTask}
+                setModal={setModal}
+                setSelectedTask={setSelectedTask}
+            />
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate('addtaskscreen')

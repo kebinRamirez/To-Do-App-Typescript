@@ -7,10 +7,14 @@ import { complete, uncomplete } from '../redux/features/CreateATask'
 
 interface ListProps {
     tasks: taskState[]
+    setSelectedTask: (a: taskState) => void
+    setModal: (a: boolean) => void
 }
 
 const ListComponent: React.FC<ListProps> = ({
-    tasks
+    tasks,
+    setSelectedTask,
+    setModal
 }) => {
     const dispatch = useDispatch();
 
@@ -22,12 +26,15 @@ const ListComponent: React.FC<ListProps> = ({
                 return <View key={item.id} style={styles.card}>
                     <View style={styles.checkContainer}>
                         {item.completed ? (
-                            <TouchableOpacity onPress={()=> dispatch(uncomplete(item.id))} style={styles.checkCompleted} />
+                            <TouchableOpacity onPress={() => dispatch(uncomplete(item.id))} style={styles.checkCompleted} />
                         ) : (
-                            <TouchableOpacity onPress={()=> dispatch(complete(item.id))} style={styles.check} />
+                            <TouchableOpacity onPress={() => dispatch(complete(item.id))} style={styles.check} />
                         )}
                     </View>
-                    <TouchableOpacity style={styles.contentContainer}>
+                    <TouchableOpacity onPress={() => {
+                        setSelectedTask(item)
+                        setModal(true)
+                    }} style={styles.contentContainer}>
                         <Text style={styles.titleStyle}>
                             {item.title}
                         </Text>

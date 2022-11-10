@@ -7,6 +7,7 @@ import DatePickerComplete from "../components/DatePicker";
 import { useDispatch } from 'react-redux';
 import { create } from '../redux/features/CreateATask'
 import moment from 'moment'
+import AddAndEditComponent from "../components/AddAndEditComponent";
 
 function AddTaskScreen({ navigation }: any) {
     const [title, setTitle] = useState("")
@@ -16,7 +17,7 @@ function AddTaskScreen({ navigation }: any) {
     const [date, setDate] = useState("Select a date")
     const [dateP, setDateP] = useState(new Date());
     const [startTime, setStartTime] = useState('Select a start')
-    const [endTime, SetEndTime] = useState('select an end')
+    const [endTime, setEndTime] = useState('select an end')
     const [remind, setRemind] = useState("Select a remind")
     const [repeat, setRepeat] = useState("Select a Repeat")
     const dispatch = useDispatch();
@@ -24,37 +25,35 @@ function AddTaskScreen({ navigation }: any) {
     return (
         <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
             <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scroollViewStyle}>
-                <Text style={styles.labelStyle}>
-                    {'Title'}
-                </Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={setTitle}
-                    value={title}
-                    placeholder="Type a title"
+                <AddAndEditComponent
+                    title={title}
+                    setTitle={setTitle}
+                    date={date}
+                    dateP={dateP}
+                    setDate={setDate}
+                    setDateP={setDateP}
+                    setShow={setShow}
+                    show={show}
+                    setShowStart={setShowStart}
+                    setStartTime={setStartTime}
+                    showStart={showStart}
+                    startTime={startTime}
+                    setShowEnd={setShowEnd}
+                    setEndTime={setEndTime}
+                    showEnd={showEnd}
+                    endTime={endTime}
+                    remind={remind}
+                    setRemind={setRemind}
+                    repeat={repeat}
+                    setRepeat={setRepeat}
                 />
-                {/* date picker */}
-                <DatePickerComplete date={date} dateP={dateP} setDate={setDate} setDateP={setDateP} setShow={setShow} show={show} title={'Deadline'} />
-                <View style={styles.viewStyle}>
-                    {/* start time picker */}
-                    <TimePicker date={dateP} funShow={setShowStart} funTime={setStartTime} show={showStart} time={startTime} title="Start time" />
-                    {/* space between */}
-                    <View style={{width:10}}/>
-                    {/* end time picker */}
-                    <TimePicker date={dateP} funShow={setShowEnd} funTime={SetEndTime} show={showEnd} time={endTime} title="End time" />
-                </View>
-                {/* Remind picker */}
-                <PickerComponent title="Remind" constP={RemidPickerConst} val={remind} fun={setRemind} />
-                {/* Repeat picker */}
-                <PickerComponent title="Repeat" constP={RepeatPickerConst} val={repeat} fun={setRepeat} />
-
             </ScrollView>
             <TouchableOpacity
                 onPress={() => {
-                    if(title!="" && date!="Select a date" && startTime!="Select a start" && endTime!="select an end" && remind!="Select a remind" && repeat!="Select a Repeat"){
+                    if (title != "" && date != "Select a date" && startTime != "Select a start" && endTime != "select an end" && remind != "Select a remind" && repeat != "Select a Repeat") {
                         dispatch(create(
                             {
-                                id:moment().valueOf(),
+                                id: moment().valueOf(),
                                 title: title,
                                 deadline: date,
                                 startTime: startTime,
@@ -65,10 +64,10 @@ function AddTaskScreen({ navigation }: any) {
                             }
                         ))
                         navigation.goBack()
-                    }else{
+                    } else {
                         Alert.alert('Complete the information')
                     }
-                    
+
                 }}
                 style={styles.buttonStyle}>
                 <Text style={styles.textButtonStyle}>
@@ -99,7 +98,6 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: 'bold'
     },
-
     viewStyle: {
         flexDirection: 'row',
     },

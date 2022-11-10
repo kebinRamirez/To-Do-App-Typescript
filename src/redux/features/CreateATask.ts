@@ -38,7 +38,54 @@ export const taskSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.task.push(action.payload);
-      state.task.sort((a,b)=> b.id -a.id)
+      state.task.sort((a, b) => b.id - a.id);
+    },
+    deleteT: (state, action: {payload: number}) => {
+      var arr: taskState[] = [];
+      var arr2: taskState[] = [];
+      var encontro = false;
+      state.task.map(item => {
+        if (item.id != action.payload) {
+          arr.push(item);
+        } else {
+          encontro = true;
+        }
+      });
+      state.task = arr;
+      if (!encontro) {
+        state.taskCompleted.map(item => {
+          if (item.id != action.payload) {
+            arr2.push(item);
+          }
+        });
+        state.taskCompleted = arr2;
+      }
+    },
+    update: (state, action: {payload: taskState}) => {
+      var arr: taskState[]= []
+      var arr2: taskState[]=[]
+      var encontro= false
+      state.task.map(item=>{
+        if(item.id!= action.payload.id){
+          arr.push(item)
+        }else{
+          arr.push(action.payload)
+          encontro= true
+        }
+      })
+      state.task=arr
+      state.task.sort((a, b) => b.id - a.id);
+      if(!encontro){
+        state.taskCompleted.map(item=>{
+          if(item.id!= action.payload.id){
+            arr2.push(item)
+          }else{
+            arr2.push(action.payload)
+          }
+        })
+        state.taskCompleted = arr2;
+        state.taskCompleted.sort((a, b) => b.id - a.id);
+      }
     },
     complete: (state, action: {payload: number}) => {
       var arr: taskState[] = [];
@@ -54,7 +101,7 @@ export const taskSlice = createSlice({
         }
       });
       state.task = arr;
-      state.taskCompleted.sort((a,b)=> b.id -a.id)
+      state.taskCompleted.sort((a, b) => b.id - a.id);
     },
     uncomplete: (state, action: {payload: number}) => {
       var arr: taskState[] = [];
@@ -70,17 +117,20 @@ export const taskSlice = createSlice({
         }
       });
       state.taskCompleted = arr;
-      state.task.sort((a,b)=> b.id -a.id)
+      state.task.sort((a, b) => b.id - a.id);
     },
-    starting:(state, action: {payload: {tasks: taskState[], tasksCompleted: taskState[]}})=>{
-      state.task= action.payload.tasks
-      state.taskCompleted= action.payload.tasksCompleted
-    }
+    starting: (
+      state,
+      action: {payload: {tasks: taskState[]; tasksCompleted: taskState[]}},
+    ) => {
+      state.task = action.payload.tasks;
+      state.taskCompleted = action.payload.tasksCompleted;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {create, complete, uncomplete, starting} = taskSlice.actions;
+export const {create, complete, uncomplete, starting, update, deleteT} = taskSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
